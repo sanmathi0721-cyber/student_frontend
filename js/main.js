@@ -1,4 +1,4 @@
-const API = "https://your-backend.onrender.com"; // ← change to your backend URL
+const API = "https://student-backend-1-l4wo.onrender.com"; // ← change to your backend URL
 
 async function login() {
   const username = document.getElementById("username").value;
