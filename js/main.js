@@ -1,5 +1,5 @@
 // replace this with your deployed Render backend URL
-const API = "https://your-backend.onrender.com";
+const API = "https://student-backend-quqp.onrender.com";
 
 async function login() {
   const username = document.getElementById("username").value;
