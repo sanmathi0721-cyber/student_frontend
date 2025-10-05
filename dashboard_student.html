@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>Student Dashboard</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h2>Student Attendance Records</h2>
-  <table id="attendance-table">
-    <thead>
-      <tr><th>Date</th><th>Status</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <script src="js/main.js"></script>
+  <h1>Student Dashboard</h1>
+  <p>Welcome, Student!</p>
+
+  <button onclick="viewMyAttendance()">View My Attendance</button>
+  <div id="records"></div>
+
+  <script src="main.js"></script>
 </body>
 </html>
