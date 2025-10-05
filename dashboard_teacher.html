@@ -1,19 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>Teacher Dashboard</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h2>Teacher Dashboard</h2>
-  <button onclick="loadStudents()">Load Students</button>
-  <table id="students-table">
-    <thead>
-      <tr><th>ID</th><th>Name</th><th>Roll No</th><th>Mark</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <h1>Teacher Dashboard</h1>
+  <p>Welcome, Teacher!</p>
 
-  <script src="js/main.js"></script>
+  <input id="student_name" placeholder="Student username" />
+  <select id="status">
+    <option value="Present">Present</option>
+    <option value="Absent">Absent</option>
+  </select>
+  <button onclick="markAttendance()">Mark Attendance</button>
+
+  <button onclick="exportCSV()">Export CSV</button>
+
+  <h2>Marked Attendance:</h2>
+  <div id="records"></div>
+
+  <script src="main.js"></script>
 </body>
 </html>
