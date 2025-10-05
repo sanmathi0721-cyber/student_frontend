@@ -1,10 +1,9 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #f7f9fc;
-  padding: 20px;
+  font-family: Arial;
+  text-align: center;
+  background-color: #f8f9fa;
 }
-
-.login-container {
+.container {
   width: 300px;
   margin: 100px auto;
   background: white;
@@ -12,30 +11,17 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 10px #ccc;
 }
-
-input {
-  width: 100%;
-  margin: 5px 0;
+input, select, button {
+  width: 90%;
+  margin: 10px 0;
   padding: 8px;
 }
-
 button {
-  padding: 8px 12px;
-  margin: 5px;
-  background: #007bff;
+  background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
 }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-th, td {
-  padding: 10px;
-  border: 1px solid #ddd;
+button:hover {
+  background-color: #0056b3;
 }
