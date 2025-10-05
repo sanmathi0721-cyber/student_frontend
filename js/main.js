@@ -1,5 +1,4 @@
-// replace this with your deployed Render backend URL
-const API = "https://student-backend-quqp.onrender.com";
+const API = "https://your-backend.onrender.com"; // ← change to your backend URL
 
 async function login() {
   const username = document.getElementById("username").value;
@@ -12,6 +11,7 @@ async function login() {
   });
 
   const data = await res.json();
+
   if (res.ok) {
     localStorage.setItem("user", JSON.stringify(data));
     if (data.role === "teacher") {
@@ -20,57 +20,47 @@ async function login() {
       window.location.href = "dashboard_student.html";
     }
   } else {
-    alert(data.error);
+    alert(data.error || "Login failed");
   }
 }
 
-async function loadStudents() {
-  const res = await fetch(`${API}/students`);
-  const students = await res.json();
-  const tbody = document.querySelector("#students-table tbody");
-  tbody.innerHTML = "";
+async function markAttendance() {
+  const student = document.getElementById("student_name").value;
+  const status = document.getElementById("status").value;
 
-  students.forEach(s => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${s.id}</td>
-      <td>${s.name}</td>
-      <td>${s.roll_no}</td>
-      <td>
-        <button onclick="markAttendance(${s.id}, 'Present')">Present</button>
-        <button onclick="markAttendance(${s.id}, 'Absent')">Absent</button>
-      </td>`;
-    tbody.appendChild(tr);
-  });
-}
-
-async function markAttendance(student_id, status) {
-  const res = await fetch(`${API}/mark`, {
+  const res = await fetch(`${API}/attendance/mark`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ student_id, status }),
+    body: JSON.stringify({ username: student, status }),
   });
+
   const data = await res.json();
   alert(data.message);
+  loadAll();
 }
 
-async function loadStudentAttendance() {
+async function loadAll() {
+  const res = await fetch(`${API}/attendance/view/student`);
+  const data = await res.json();
+  const div = document.getElementById("records");
+  div.innerHTML = data.map(a => `<p>${a.username} - ${a.status} (${a.date})</p>`).join("");
+}
+
+async function exportCSV() {
+  const res = await fetch(`${API}/attendance/export`);
+  const text = await res.text();
+  const blob = new Blob([text], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "attendance.csv";
+  a.click();
+}
+
+async function viewMyAttendance() {
   const user = JSON.parse(localStorage.getItem("user"));
-  const res = await fetch(`${API}/view/${user.user_id}`);
-  const records = await res.json();
-
-  const tbody = document.querySelector("#attendance-table tbody");
-  tbody.innerHTML = "";
-
-  records.forEach(r => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${r.date}</td><td>${r.status}</td>`;
-    tbody.appendChild(tr);
-  });
+  const res = await fetch(`${API}/attendance/view/${user.username}`);
+  const data = await res.json();
+  const div = document.getElementById("records");
+  div.innerHTML = data.map(a => `<p>${a.status} (${a.date})</p>`).join("");
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  if (window.location.pathname.endsWith("dashboard_student.html")) {
-    loadStudentAttendance();
-  }
-});
